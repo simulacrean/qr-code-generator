@@ -4,6 +4,11 @@ Generate a QR code with an embedded logo from the command line. The encoded
 URL is shortened (via TinyURL) by default, and the image is written to the
 `output/` folder.
 
+This is a thin CLI wrapper around
+[`easyqrcodejs-nodejs`](https://www.npmjs.com/package/easyqrcodejs-nodejs),
+which does the actual QR code rendering. URL shortening is handled by the free
+[TinyURL](https://tinyurl.com) API (no account or API key required).
+
 ## Requirements
 
 - Node.js 18 or newer (uses the built-in `fetch` and `util.parseArgs`)

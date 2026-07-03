@@ -18,7 +18,7 @@ const DEFAULT_OUT_FILE_SUFFIX = 'image';
 // A QR code needs a "quiet zone" (blank margin) around it to be reliably
 // scannable. easyqrcodejs defaults this to 0, so we add one by default,
 // sized as a fraction of the QR width (roughly the 4-module minimum).
-const QUIET_ZONE_FRACTION = 0.06;
+const QUIET_ZONE_FRACTION = 0.02;
 
 const USAGE = `Usage: npm run generate -- --text <text> --logo <path> [options]
 

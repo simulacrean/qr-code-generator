@@ -41,7 +41,7 @@ Optional:
 | `--logo-width`      | `3000`     | Logo width in pixels                          |
 | `--logo-height`     | `3000`     | Logo height in pixels                         |
 | `--quality`         | `1`        | Output image quality (0-1)                    |
-| `--quiet-zone`      | 6% of width | Blank margin around the QR (needed to scan)  |
+| `--quiet-zone`      | 2% of width | Blank margin around the QR (needed to scan)  |
 | `--out-file-prefix` | `qr_code`  | Output filename prefix                        |
 | `--out-file-suffix` | `image`    | Output filename suffix                        |
 | `--no-shorten`      | off        | Skip URL shortening and encode `--text` as-is |

@@ -181,3 +181,9 @@ dist
 
 output/*
 !output/.gitkeep
+
+# design assets (large binaries / source art kept out of git)
+/assets/*
+!/assets/logo.jpg
+!/assets/logo.svg
+/logo.jpg

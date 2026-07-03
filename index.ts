@@ -15,6 +15,11 @@ const DEFAULTS = {
 const DEFAULT_OUT_FILE_PREFIX = 'qr_code';
 const DEFAULT_OUT_FILE_SUFFIX = 'image';
 
+// A QR code needs a "quiet zone" (blank margin) around it to be reliably
+// scannable. easyqrcodejs defaults this to 0, so we add one by default,
+// sized as a fraction of the QR width (roughly the 4-module minimum).
+const QUIET_ZONE_FRACTION = 0.12;
+
 const USAGE = `Usage: npm run generate -- --text <text> --logo <path> [options]
 
 Required:
@@ -27,6 +32,7 @@ Optional:
   --logo-width <px>        Logo width in pixels (default: ${DEFAULTS.logoWidth})
   --logo-height <px>       Logo height in pixels (default: ${DEFAULTS.logoHeight})
   --quality <0-1>          Output image quality (default: ${DEFAULTS.quality})
+  --quiet-zone <px>        Blank margin around the QR (default: ${Math.round(100 * QUIET_ZONE_FRACTION)}% of width)
   --out-file-prefix <str>  Output filename prefix (default: ${DEFAULT_OUT_FILE_PREFIX})
   --out-file-suffix <str>  Output filename suffix (default: ${DEFAULT_OUT_FILE_SUFFIX})
   --no-shorten             Do not shorten the URL (shortening is on by default)
@@ -41,6 +47,8 @@ interface QRConfig {
   logoWidth: number;
   logoHeight: number;
   quality: number;
+  quietZone: number;
+  quietZoneColor: string;
 }
 
 interface ParsedOptions {
@@ -90,6 +98,7 @@ const parseConfig = (): ParsedOptions => {
       'logo-width': { type: 'string' },
       'logo-height': { type: 'string' },
       quality: { type: 'string' },
+      'quiet-zone': { type: 'string' },
       'out-file-prefix': { type: 'string' },
       'out-file-suffix': { type: 'string' },
       shorten: { type: 'boolean' },
@@ -119,14 +128,21 @@ const parseConfig = (): ParsedOptions => {
     return parsed;
   };
 
+  const width = values.width !== undefined ? toNumber('width', values.width) : DEFAULTS.width;
+  const height = values.height !== undefined ? toNumber('height', values.height) : DEFAULTS.height;
+
   const config: QRConfig = {
     text: values.text as string,
     logo: values.logo as string,
-    width: values.width !== undefined ? toNumber('width', values.width) : DEFAULTS.width,
-    height: values.height !== undefined ? toNumber('height', values.height) : DEFAULTS.height,
+    width,
+    height,
     logoWidth: values['logo-width'] !== undefined ? toNumber('logo-width', values['logo-width']) : DEFAULTS.logoWidth,
     logoHeight: values['logo-height'] !== undefined ? toNumber('logo-height', values['logo-height']) : DEFAULTS.logoHeight,
     quality: values.quality !== undefined ? toNumber('quality', values.quality) : DEFAULTS.quality,
+    quietZone: values['quiet-zone'] !== undefined
+      ? toNumber('quiet-zone', values['quiet-zone'])
+      : Math.round(width * QUIET_ZONE_FRACTION),
+    quietZoneColor: '#ffffff',
   };
 
   const outFilePrefix = values['out-file-prefix'] ?? DEFAULT_OUT_FILE_PREFIX;

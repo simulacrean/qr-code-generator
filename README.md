@@ -81,3 +81,7 @@ output/<prefix>_<ISO timestamp>_<suffix>.jpg
 
 - `npm run generate`: build a QR code (see above)
 - `npm run typecheck`: type-check the TypeScript sources
+
+## TODO
+
+- [ ] Switch URL shortening to TinyURL's authenticated API (`api.tinyurl.com/create` with a Bearer token) so short links redirect straight to the destination. The free anonymous `api-create.php` links now route through a preview interstitial page. Until then, use `--no-shorten` for links that must open directly, such as payment deep links.

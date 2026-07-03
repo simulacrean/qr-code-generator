@@ -2,8 +2,10 @@
   "name": "qr-code-generator",
   "version": "1.0.0",
   "description": "Generate QR code from command line",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
+    "generate": "tsx index.ts",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,5 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "easyqrcodejs-nodejs": "^4.4.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
   }
 }
